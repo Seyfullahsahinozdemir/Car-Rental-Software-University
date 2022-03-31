@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #8D8DAA;
+}
+
+#center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);    
+}
+
+#container {
+    text-align: center;
+}
+
+/* This part for form. */
+#login {
+    height: 23rem;
+    width: 20rem;
+    border: 6px solid black;
+    border-radius: 6px;
+    background-color: #F7F5F2;
+}
+
+
+/* for image */
+#login-img {
+    border-color: aqua;
+    border-width: 2px;
+}
+
+/* for buttons */
+#login-btn {
+    background-color: #04AA6D;
+    color: white;
+    border-radius: 3px;
+    padding: 10px 16px;
+    margin: 8px 5px;
+    width: 30%;
+}
+
+#login-btn:hover {
+    opacity: 0.8;
+}
+
+#signup-btn {
+    background-color: grey;
+    color: white;
+    border-radius: 3px;
+    padding: 10px 16px;
+    margin: 8px 5px;
+    width: 30%;
+}
+
+#signup-btn:hover {
+    opacity: 0.8;
+}
+
+label {
+    width: 5rem;
+    display: inline-block;
+}

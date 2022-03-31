@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reservation</title>
+    <link rel="stylesheet" href="css/Navbar.css">
+    <link rel="stylesheet" href="css/Reservation.css">
+    <script src="js/Customer.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div class="navbar">
+            <ul id="ul">
+                <li id="li"><a href="Customer.html">Home</a></li>
+                <li id="li"><a href="Reservation.html">Add Reservation</a></li>
+                <li id="li"><a href="MyReservation.html">My Reservations</a></li>
+                <li id="li" style="float:right"><a class="active" href="Login.html">Logout</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div id="login">
+                <div id="car-list-div">
+                    <div style="text-align: center; padding: 15px;">
+                        <input style="margin-right: 20px; font-size: 18px;" type="date" name="date" id="date">
+                        <a id="search-past-reservation-btn">Search</a>
+                    </div>
+                    <div id="scrollable-myReservation" class="scrollable">
+                        <table id="carTable">
+                            <tr>
+                                <th>Image</th>
+                                <th>Model</th>
+                                <th>Price</th>
+                                <th>Start</th>
+                                <th>Finish</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td><img src='img/sedan.png' alt='sedan'></td>
+                                <td>Sedan</td><td>220$</td>
+                                <td>2022-04-02</td>
+                                <td>2022-04-08</td>
+                                <td>
+                                    <a id="update-btn">Update</a><br><br><br>
+                                    <a id="delete-btn">Delete</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src='img/sport-car.png' alt='sport-car'></td>
+                                <td>Sport</td><td>280$</td>
+                                <td>2022-03-01</td>
+                                <td>2022-03-11</td>
+                                <td>
+                                    <a id="update-btn">Update</a><br><br><br>
+                                    <a id="delete-btn">Delete</a>
+                                </td>                            </tr>
+                            <tr>
+                                <td><img src='img/jeep.png' alt='jeep'></td>
+                                <td>Jeep</td>
+                                <td>250$</td>
+                                <td>2022-02-02</td>
+                                <td>2022-02-08</td>
+                                <td>
+                                    <a id="update-btn">Update</a><br><br><br>
+                                    <a id="delete-btn">Delete</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <a style="visibility: hidden; " onclick='checkCarList()' id="add-btn">Add Reservation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

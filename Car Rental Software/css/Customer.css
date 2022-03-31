@@ -1,0 +1,25 @@
+
+  /* for image */
+
+  body {
+    background: url(../img/customer-home.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+
+  #center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);    
+}
+
+#login {
+    height: 18rem;
+    width: 40rem;
+    padding: 0 30px 0 30px;
+    background-color: #F7F5F2;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Reservation</title>
+    <link rel="stylesheet" href="css/Navbar.css">
+    <link rel="stylesheet" href="css/Reservation.css">
+    <script src="js/Customer.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div class="navbar">
+            <ul id="ul">
+                <li id="li"><a href="Customer.html">Home</a></li>
+                <li id="li"><a href="Reservation.html">Add Reservation</a></li>
+                <li id="li"><a href="MyReservation.html">My Reservations</a></li>
+                <li id="li" style="float:right"><a class="active" href="Login.html">Logout</a></li>
+            </ul>
+        </div>
+        <div class="content">
+                <div id="login">
+                    <div id="search1">
+                        <h3>Add New Reservation</h3>
+                        <form action="" method="post">
+                            <div class="item-group">
+                                <label for="type">Type: </label><br>
+                                <input type="checkbox" id="small" name="small" value="small">
+                                <label for="small">Small-size (2 people) <span style="visibility: hidden; color: red;" id="type-check">* Required Type</span></label><br>
+                                <input type="checkbox" id="mid" name="mid" value="mid">
+                                <label for="mid">Mid-size (2-5 people)</label><br>
+                                <input type="checkbox" id="large" name="large" value="large">
+                                <label for="large">Large-size (5+ people)</label><br><br><br>    
+                            </div>
+  
+                            <div class="item-group">
+                                <label for="price">Price: </label><br>
+                                <input type="checkbox" id="price1" name="price1" value="price1">
+                                <label for="price1">100$ - 199$ <span style="visibility: hidden; color: red;" id="price-check">* Required Price</span></label><br>
+                                <input type="checkbox" id="price2" name="price2" value="price2">
+                                <label for="price2">200$ - 299$</label><br>
+                                <input type="checkbox" id="price3" name="price3" value="price3">
+                                <label for="price3">300$ - 399$</label><br><br><br>
+                            </div>
+                            
+        
+                            <div class="item-group">
+                                <label for="sdate">Start Date: </label><br>
+                                <input type="date" name="sdate" id="sdate"><span style="visibility: hidden; color: red;" id="date-check">* Required Date</span><br><br>
+                                <label for="fdate">Finish Date: </label><br>
+                                <input type="date" name="fdate" id="fdate">
+                                <br><br>
+                            </div>
+                            <br>
+                            <a onclick="searchCheck()" id="search-btn">Search</a>
+
+                        </form>
+                    </div>
+                    <div id="search2">
+                        <div id="car-list-div">
+                            <h3>Choose a Car From List</h3>
+                            <ul id="carList">
+                                
+                            </ul>
+                            <div style="visibility: hidden;" id="scrollable" class="scrollable">
+                                <table id="carTable">
+                                
+                                </table>
+                            </div>
+                            
+                            <a style="visibility: hidden; " onclick='checkCarList()' id="add-btn">Add Reservation</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

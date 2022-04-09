@@ -2,24 +2,53 @@
   /* for image */
 
   body {
-    background: url(../img/customer-home.jpg) no-repeat center center fixed;
+    /*
+    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    */
+    background: url(../img/banner-left.png) no-repeat center center fixed;
+    background-position: left center;
+    font-family: Arial, sans-serif;
+    background-color: white;
+  }
+
+  #home-img {
+    height: 100%;
+    z-index: -1;
   }
 
 
   #center {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);    
+    top: 25%;
+    left: 35%;
+    right: 30px;
+    
 }
 
 #login {
-    height: 18rem;
-    width: 40rem;
+    padding: 20px 30px;
+    background-color: #3f4263;
+}
+
+
+@media (max-width: 768px) {
+
+  #center {
+    top: 20%;
+    left: 15%;
+    right: 15%;
+  }
+
+  #login {
     padding: 0 30px 0 30px;
-    background-color: #F7F5F2;
+    z-index: 5;
+  }
+
+  #logout {
+    z-index: 100;
+  }
 }

@@ -12,7 +12,7 @@ function loginCheck() {
         window.location.href = "Customer.html"
     }
     else if (uname == "manager" && pass == "1234") {
-        window.location.href = "Manager.html";
+        window.location.href = "Manager_Overview.html";
     }
     else {
         if (uname !== "" && pass !== "") {
@@ -48,7 +48,7 @@ function signupCheck() {
         document.getElementById("repassword").placeholder = "* Required"; 
     }
 
-    if (pass !== "" && repass !== "") {
+    if (pass !== "" && repass !== "" && pass !== repass) {
         document.getElementById("errorTag").style.visibility = "visible";
     }
     

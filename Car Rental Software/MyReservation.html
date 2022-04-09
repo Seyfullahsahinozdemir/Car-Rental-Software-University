@@ -7,17 +7,26 @@
     <title>My Reservation</title>
     <link rel="stylesheet" href="css/Navbar.css">
     <link rel="stylesheet" href="css/Reservation.css">
+    <link rel="stylesheet" href="css/Table.css">
     <script src="js/Customer.js"></script>
+    <script src="js/Navbar.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        img {
+            width: 180px;
+        }
+    </style>
 </head>
 <body>
     <div class="box">
-        <div class="navbar">
-            <ul id="ul">
-                <li id="li"><a href="Customer.html">Home</a></li>
-                <li id="li"><a href="Reservation.html">Add Reservation</a></li>
-                <li id="li"><a href="MyReservation.html">My Reservations</a></li>
-                <li id="li" style="float:right"><a class="active" href="Login.html">Logout</a></li>
-            </ul>
+        <div class="topnav" id="myTopnav">
+            <a href="Customer.html">Home</a>
+            <a href="Reservation.html">Add Reservation</a>
+            <a href="MyReservation.html">My Reservations</a>
+            <a id = 'logout' href="Login.html">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="navbar()">
+              <i class="fa fa-bars"></i>
+            </a>
         </div>
         <div class="content">
             <div id="login">
@@ -29,39 +38,63 @@
                     <div id="scrollable-myReservation" class="scrollable">
                         <table id="carTable">
                             <tr>
-                                <th>Image</th>
-                                <th>Model</th>
-                                <th>Price</th>
-                                <th>Start</th>
-                                <th>Finish</th>
-                                <th></th>
+                                <th scope='col'>Image</th>
+                                <th scope='col'>Model</th>
+                                <th scope='col'>Price</th>
+                                <th scope='col'>Start</th>
+                                <th scope='col'>Finish</th>
+                                <th scope='col'></th>
                             </tr>
                             <tr>
-                                <td><img src='img/sedan.png' alt='sedan'></td>
-                                <td>Sedan</td><td>220$</td>
-                                <td>2022-04-02</td>
-                                <td>2022-04-08</td>
-                                <td>
+                                <td data-label = "Image"><img src='img/sedan.png' alt='sedan'></td>
+                                <td data-label = "Model">Sedan</td>
+                                <td data-label = "Price">220$</td>
+                                <td data-label = "Start">2022-04-02</td>
+                                <td data-label = "Finish">2022-04-08</td>
+                                <td data-label = "">
                                     <a id="update-btn">Update</a><br><br><br>
                                     <a id="delete-btn">Delete</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td><img src='img/sport-car.png' alt='sport-car'></td>
-                                <td>Sport</td><td>280$</td>
-                                <td>2022-03-01</td>
-                                <td>2022-03-11</td>
-                                <td>
+                                <td scope="row" data-label = "Image"><img src='img/sport-car.png' alt='sport-car'></td>
+                                <td data-label = "Model">Sport</td>
+                                <td data-label = "Price">280$</td>
+                                <td data-label = "Start">2022-03-01</td>
+                                <td data-label = "Finish">2022-03-11</td>
+                                <td data-label = "">
                                     <a id="update-btn">Update</a><br><br><br>
                                     <a id="delete-btn">Delete</a>
                                 </td>                            </tr>
                             <tr>
-                                <td><img src='img/jeep.png' alt='jeep'></td>
-                                <td>Jeep</td>
-                                <td>250$</td>
-                                <td>2022-02-02</td>
-                                <td>2022-02-08</td>
-                                <td>
+                                <td scope="row" data-label = "Image"><img src='img/jeep.png' alt='jeep'></td>
+                                <td data-label = "Model">Jeep</td>
+                                <td data-label = "Price">250$</td>
+                                <td data-label = "Start">2022-02-02</td>
+                                <td data-label = "Finish">2022-02-08</td>
+                                <td data-label = "">
+                                    <a id="update-btn">Update</a><br><br><br>
+                                    <a id="delete-btn">Delete</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" data-label = "Image"><img src='img/jeep.png' alt='jeep'></td>
+                                <td data-label = "Model">Jeep</td>
+                                <td data-label = "Price">250$</td>
+                                <td data-label = "Start">2022-02-02</td>
+                                <td data-label = "Finish">2022-02-08</td>
+                                <td data-label = "">
+                                    <a id="update-btn">Update</a><br><br><br>
+                                    <a id="delete-btn">Delete</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" data-label = "Image"><img src='img/jeep.png' alt='jeep'></td>
+                                <td data-label = "Model">Jeep</td>
+                                <td data-label = "Price">250$</td>
+                                <td data-label = "Start">2022-02-02</td>
+                                <td data-label = "Finish">2022-02-08</td>
+                                <td data-label = "">
                                     <a id="update-btn">Update</a><br><br><br>
                                     <a id="delete-btn">Delete</a>
                                 </td>
@@ -69,7 +102,6 @@
                         </table>
                     </div>
                     
-              
                 </div>
             </div>
         </div>

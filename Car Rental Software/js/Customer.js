@@ -1,3 +1,7 @@
+
+
+
+
 function searchCheck() {
     let small_btn = document.getElementById("small");
     let mid_btn = document.getElementById("mid");
@@ -37,20 +41,20 @@ function searchCheck() {
     }
 
     // static part if user choose small-size and 300$ together the system doesn't show available car.
-    let car_ul = document.getElementById("carList");
     let car_table = document.getElementById("carTable");
+    let car_err = document.getElementById("errorTag");
+
     if ((small_btn.checked == true || mid_btn.checked == true || large_btn.checked == true) && (price1.checked == true || price2.checked == true || price3.checked == true) && sdate.value != "" && fdate.value != "" ) {
         if (mid_btn.checked == true && small_btn.checked == true && price2.checked == true && sdate.value != "" && fdate.value != "") {
+            car_err.style.visibility = "hidden";
             document.getElementById("scrollable").style.visibility = "visible";
-            car_ul.innerHTML = "";
-            car_table.innerHTML = "<tr><th>Image</th><th>Model</th><th>Price</th><th>Check</th></tr><tr><td><img src='img/sedan.png' alt='sedan'></td><td>Sedan</td><td>220$</td><td><input type='checkbox' name='sedan' id='sedan'></td></tr>"+
-            "<tr><td><img src='img/sport-car.png' alt='sport-car'></td><td>Sport</td><td>280$</td><td><input type='checkbox' name='sport' id='sport'></td></tr>"+
-            "<tr><td><img src='img/jeep.png' alt='jeep'></td><td>Jeep</td><td>250$</td><td><input type='checkbox' name='jeep' id='jeep'></td></tr>";
-            let add_btn = document.getElementById("add-btn");
-            add_btn.style.visibility = "visible";
+            car_table.innerHTML = "<div class='car-style' id='cars'><h3 style='margin-top: 5px;'>Sedan</h3><img src='img/sedan.png' alt='sedan'><p>Lorem ipsum dolor sit amet consectetur.</p><p>Price: 50$/day</p><a id='rent-btn' class='car-style' href='MyReservation.html'>Rent</a></div>"+
+            "<div class='car-style' id='cars'><h3 style='margin-top: 5px;'>Sport</h3><img src='img/sport-car.png' alt='sport'><p>Lorem ipsum dolor sit amet consectetur.</p><p>Price: 90$/day</p><a id='rent-btn' class='car-style' href='MyReservation.html'>Rent</a></div>"+
+            "<div class='car-style' id='cars'><h3 style='margin-top: 5px;'>Jeep</h3><img src='img/jeep.png' alt='jeep'><p>Lorem ipsum dolor sit amet consectetur.</p><p>Price: 60$/day</p><a id='rent-btn' class='car-style' href='MyReservation.html'>Rent</a></div>"
+            + "<div class='car-style' id='cars'><h3 style='margin-top: 5px;'>Jeep</h3><img src='img/jeep.png' alt='jeep'><p>Lorem ipsum dolor sit amet consectetur.</p><p>Price: 60$/day</p><a id='rent-btn' class='car-style' href='MyReservation.html'>Rent</a></div>";
     
         } else {
-            car_ul.innerHTML = "<span style='color: red;'>* There is no available car !!!</span>";
+            car_err.style.visibility = "visible";
             document.getElementById("scrollable").style.visibility = "hidden";
             car_table.innerHTML = "";
         }
@@ -69,3 +73,7 @@ function checkCarList() {
         window.location.href = "MyReservation.html";
     }
 }
+
+
+
+

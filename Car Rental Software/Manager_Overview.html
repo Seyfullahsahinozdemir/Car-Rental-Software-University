@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Overview</title>
+    <link rel="stylesheet" href="css/Navbar.css">
+    <link rel="stylesheet" href="css/Table.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/Reservation.css">
+    <link rel="stylesheet" href="css/Manager.css">
+    <script src="js/Navbar.js"></script>
+    <script src="js/Manager.js"></script>
+
+
+</head>
+<body>
+    <div class="box">
+        <div class="topnav" id="myTopnav">
+            <a href="Manager_Overview.html">Overview</a>
+            <a href="Manager_ReservationList.html">Reservation List</a>
+            <a href="Manager_CarList.html">Car List</a>
+            <a href="Manager_UserList.html">User List</a>
+            <a id = 'logout' href="Login.html">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="navbar()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <div class="content">
+                <div id="login">
+                    <div id="search1">
+                        
+                        <h3>Revenue</h3>
+                        <div style="text-align: center; padding: 15px;">
+                            <input style="width: 150px; font-size: 18px;" type="text" name="text" id="text">
+                            <a id="search-past-reservation-btn">Search</a>
+                        </div>
+                        <div id="scrollable">
+                            <table>
+                                <tr id="header-revenue">
+                                    <th scope="col">Car ID</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Revenue</th>
+                                </tr>
+                                <tr>
+                                    <td data-label = "Car ID">CR1</td>
+                                    <td data-label="Image"><img src='img/sedan.png' alt='jeep'></td>
+                                    <td data-label="Revenue">800$</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td scope = "row" data-label = "Car ID">CR2</td>
+                                    <td data-label="Image"><img src='img/sport-car.png' alt='jeep'></td>
+                                    <td data-label="Revenue">1100$</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td scope = "row" data-label = "Car ID">CR3</td>
+                                    <td data-label="Image"><img src='img/jeep.png' alt='jeep'></td>
+                                    <td data-label="Revenue">650$</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td scope = "row" data-label = "Car ID">CR3</td>
+                                    <td data-label="Image"><img src='img/jeep.png' alt='jeep'></td>
+                                    <td data-label="Revenue">650$</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td scope = "row" data-label = "Car ID">CR3</td>
+                                    <td data-label="Image"><img src='img/jeep.png' alt='jeep'></td>
+                                    <td data-label="Revenue">650$</td>
+                                    
+                                </tr>
+                            </table>
+                        </div>
+                        
+                    </div>
+                    <div id="search2">
+                        <div id="car-list-div">
+                            <h3>Notification</h3>
+                            <div id="scrollable">
+                                <ul style="background-color: white;">
+                                    <li>* A new user named Test has joined. <span>15:58</span></li>
+                                    <li>* A new user named Test has joined. <span>15:50</span></li>
+                                    <li>* A new user named Test has joined. <span>15:45</span></li>
+                                    <li>* A new user named Test has joined. <span>15:40</span></li>
+                                    <li>* A new user named Test has joined. <span>15:35</span></li>
+                                    <li>* User Test update Reservation. <span>15:30</span></li>
+                                    <li>* User Test update Reservation. <span>15:25</span></li>
+                                    <li>* User Test update Reservation. <span>15:20</span></li>
+                                    <li>* User Test update Reservation. <span>15:15</span></li>
+                                    <li>* User Test update Reservation. <span>15:10</span></li>             
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

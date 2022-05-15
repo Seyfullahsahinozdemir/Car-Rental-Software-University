@@ -1,0 +1,238 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #F7F5F2;
+    font-family: Arial, sans-serif;
+}
+
+
+#container {
+    text-align: center;
+}
+
+#car-list-div {
+    position: relative;
+}
+
+/* to show the forms inline */
+#search1 {
+    width: 30%;
+    padding: 0 20px;
+}
+
+#search2 {
+    width: 70%;
+    padding: 0 20px;
+}
+
+#cars {
+    display: inline-block;
+    width: 45%;
+    text-align: center;
+    margin: 10px;
+    height: 330px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#rent-btn {
+    padding: 8px 14px;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+#rent-btn:hover {
+    color: white;
+    background-color: #8D8DAA;
+}
+
+img {
+    height: 128px;
+    width: 250px;;
+}
+
+.car-style {
+    border: #8D8DAA solid 1px;
+}
+
+#cars:hover {
+    color: white;
+    background-color: #2B2E4A;
+}
+
+/* Select font-size */
+label {
+    font-size: large;
+}
+select {
+    font-size: large;
+}
+
+/* Search-btn */
+#search-btn {
+    background-color: #04AA6D;
+    color: white;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin: 3px 3px;
+    width: 30%;
+    float: right;
+}
+
+#search-btn:hover {
+    opacity: 0.8;
+}
+
+/* to group type-price-date options */
+.item-group {
+    border: 1px solid #ddd;
+    padding: 5px 0 0 5px;
+    background-color: white;
+}   
+
+#search-past-reservation-btn {
+    background-color: #8D8DAA;
+    color: white;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin: 3px 3px;
+    width: 30%;
+}
+
+#search-past-reservation-btn:hover {
+    opacity: 0.8;
+}
+
+
+.check-box {
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+
+
+.fa-heart-o {
+    color: red;
+    cursor: pointer;
+  }
+  
+  .fa-heart {
+    color: red;
+    cursor: pointer;
+  }
+
+  p {
+      color: #8486A0;
+  }
+  
+  @media (max-width: 768px) {
+      #cars {
+          display: block;
+          width: 90%;
+      }
+  }
+
+  /* Popup css */
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  left: 35%;
+  right: 35%;
+  border: 3px solid #f1f1f1;
+  height: 500px;
+  z-index: 9;
+  overflow-y: scroll;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Add styles to the form container */
+.form-container {
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+
+.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+  
+#errorTag {        
+    background-color: rgb(221, 94, 94);
+}
+
+.span {
+  width: 100%;
+  line-height: 1.5rem;
+}
+
+.message-list {
+  border: black 1px solid;
+  position: absolute;
+  height: 500px;
+  top: 90px;
+  padding: 0;
+  width: 30%;
+  overflow-y: scroll;
+  left: 10%;
+}
+

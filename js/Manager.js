@@ -42,7 +42,7 @@ function editReservation(name,start,finish) {
   document.getElementById('last_finish').value = finish;
 }
 
-function deleteForm(name,start,finish) {
+function delForm(name,start,finish) {
   document.getElementById("deleteForm").style.display = "block";
   document.getElementById('delete_carname').value = name;
   document.getElementById('delete_start').value = start;

@@ -66,20 +66,26 @@
                                 $password = $_POST['password'];
                                 if ($username != "" && $password != "") {
                                     $password = MD5($_POST['password']);
-                                    $sql = "SELECT username, password,statu FROM users WHERE username = '$username' AND password = '$password'";                                   
+                                    $sql = "SELECT username, password,statu,active FROM users WHERE username = '$username' AND password = '$password'";                                   
                                     if ($result = mysqli_query($conn, $sql)) {
                                         if ($result->num_rows > 0) {
-                                            $row = $result->fetch_assoc();                                           
-                                            if ($row['statu'] == "1") {
-                                                $_SESSION['username'] = $row['username'];
-                                                $_SESSION['statu'] = $row['statu'];
-                                                header("Location:../Car Rental Software/Customer.php");
-                                            }
+                                            $row = $result->fetch_assoc();   
+                                            if ($row['active'] != 1) {
+                                                echo "<h3 id='errorTag'>User is banned !!!</h3>";
+                                            }  
                                             else {
-                                                $_SESSION['username'] = $row['username'];
-                                                $_SESSION['statu'] = $row['statu'];
-                                                header("Location:../Car Rental Software/MyReservation.php");
-                                            }                                   
+                                                if ($row['statu'] == "1") {
+                                                    $_SESSION['username'] = $row['username'];
+                                                    $_SESSION['statu'] = $row['statu'];
+                                                    header("Location:../Car Rental Software/Customer.php");
+                                                }
+                                                else {
+                                                    $_SESSION['username'] = $row['username'];
+                                                    $_SESSION['statu'] = $row['statu'];
+                                                    header("Location:../Car Rental Software/MyReservation.php");
+                                                } 
+                                            }                                      
+                                                                              
                                         }
                                         else {
                                             echo "<h3 id='errorTag'>User not found !!!</h3>";

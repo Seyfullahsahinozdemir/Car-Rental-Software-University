@@ -59,7 +59,7 @@
     </div>
     <div class="content">
             <div id="login">
-                <div>
+                <div class="search1">
                 <h3 style="left: 10%; position: absolute;">Your Messages</h3>
                 <div class="message-list">
                     
@@ -72,7 +72,7 @@
                         <?php
                         if ($_SESSION['statu'] == 1) {
                             //$sql = "SELECT m.title,m.groupID,MAX(date) AS date FROM message m WHERE m.groupID IN (SELECT m.groupID FROM message m WHERE m.customerUsername = '$username') GROUP BY groupID;";
-                            $sql = "SELECT mg.title,m.groupID,MAX(date) AS date FROM message m, message_group mg WHERE m.groupID IN (SELECT m.groupID FROM message m WHERE m.customerUsername = '$username') AND m.groupID = mg.groupID GROUP BY groupID;";
+                            $sql = "SELECT mg.title,m.groupID,MAX(date) AS date FROM message m, message_group mg WHERE m.groupID IN (SELECT m.groupID FROM message m WHERE m.customerUsername = '$username' OR m.receiver = '$username') AND m.groupID = mg.groupID GROUP BY groupID;";
                        
                         }
                         else {
@@ -85,12 +85,27 @@
                             while ($row = $result->fetch_assoc()) {
                                 $g = $row['groupID'];
                                 $str = "Help.php";
-                                echo "<tr class = 'reply_row'>
+                                $new_sql = "SELECT messageID,statu,receiver FROM message WHERE groupID = '".$row['groupID']."' AND date = '".$row['date']."'";
+                                $new_result = mysqli_query($conn,$new_sql);
+                                $new_row = $new_result->fetch_assoc();
+                                if ($new_row['statu'] == 0) {
+                                    if ($new_row['receiver'] == $_SESSION['username']) {
+                                        $style_str = "#bdbdeb";
+                                    }
+                                    else {
+                                        $style_str = "#f8f8f8";
+                                    }
+                                }
+                                else {
+                                    $style_str = "#f8f8f8";
+                                }
+                                echo "<tr class = 'reply_row' style = 'background-color: $style_str'>
                                     <td class = 'reply_title'>".$row['title']."</td>
                                     <td class = 'reply_date'>".$row['date']."</td> 
                                     <td class = 'options'>
                                     <form id=".$counter." action = '".$str."' method = 'post'>
                                     <input name = 'group' type = 'hidden' value = '".$g."'>
+                                    <input name = 'new_message' type = 'hidden' value = '".$new_row['messageID']."'>
                                     <input class = 'open_message' type = 'submit' value = 'Open' name = '".$counter."' form = '".$counter."'>
                                     </form>
                                     </td>
@@ -157,15 +172,17 @@
                                     $sql2 = "SELECT groupID FROM message WHERE groupID = '$groupID'";
                                     $result = mysqli_query($conn,$sql2);
                                     if ($result->num_rows == 0) {
-                                        $groupID = rand();
                                         break;
+                                    }
+                                    else {
+                                        $groupID = rand();
                                     }
                                 }
 
                                 if (!empty($title) && !empty($subtopic) && !empty($comment) && !empty($username)) {
-                                    $sql = "INSERT INTO message (customerUsername,groupID,title,sub_topic,comment,date,statu) VALUES ('$username','$groupID','$title','$subtopic','$comment',NOW(),0)";
-                                    //$sql = "INSERT INTO message (customerUsername,groupID,title,sub_topic,comment,date,statu) VALUES ('admin','539454528','test','General','$comment',NOW(),0)";
-                                    
+                                    $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$groupID','$comment',NOW(),0,'admin')";
+                                    $result = mysqli_query($conn,$sql);
+                                    $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$groupID','$title','$subtopic')";
                                     $result = mysqli_query($conn,$sql);
                                 }
                             }
@@ -178,6 +195,12 @@
                         if (isset($_POST[strval($i)])) {
                             echo "display: block";
                             $flag = 1;
+                            if (isset($_POST['new_message'])) {
+                                $messageID = $_POST['new_message'];
+                                $username = $_SESSION['username'];
+                                $sql_message_statu = "UPDATE message SET statu = '1' WHERE messageID = '$messageID' AND receiver = '$username'";
+                                mysqli_query($conn,$sql_message_statu);
+                            }
                         }
                     }
                   ?>">
@@ -234,12 +257,27 @@
                        echo $subtopic;
                        echo $group;*/
                         if (isset($_POST['reply-btn'])) {
+                            if ($_SESSION['statu'] == 1) {
+                                $comment = $_POST['user_mes'];
+                                $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'admin')";
+                                $result = mysqli_query($conn,$sql);
+                                $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
+                                $result = mysqli_query($conn,$sql);
+                            }
+                            else {
+                                $sql = "SELECT customerUsername FROM message WHERE groupID = '$group' AND customerUsername != 'admin'";
+                                $result = mysqli_query($conn,$sql);
+                                if ($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    $receiver = $row['customerUsername'];
+                                }
+                                $comment = $_POST['user_mes'];
+                                $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'$receiver')";
+                                $result = mysqli_query($conn,$sql);
+                                $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
+                                $result = mysqli_query($conn,$sql);
+                            }
                             
-                            $comment = $_POST['user_mes'];
-                            $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu) VALUES ('$username','$group','$comment',NOW(),0)";
-                            $result = mysqli_query($conn,$sql);
-                            $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
-                            $result = mysqli_query($conn,$sql);
 
                         }
                       ?>

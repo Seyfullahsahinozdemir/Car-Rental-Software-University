@@ -36,7 +36,7 @@
                     editReservation(name,start,finish)
                 };
                 delete_btn[i].onclick = function () {
-                    deleteForm(name,start,finish);
+                    delForm(name,start,finish);
                 }
             }
             });

@@ -53,7 +53,11 @@ function openTempRate(carID) {
     document.getElementById(str).style.display = "block";
 }
 
-function closeTempRate(carID) {
-    let str = carID + "_car";
-    document.getElementById(str).style.display = "none";
+function closeTempRate() {
+    /*let str = carID + "_car";
+    document.getElementById(str).style.display = "none";*/
+    let temp = document.getElementsByClassName('div1');
+    for (let i = 0; i < temp.length; i++) {
+        temp[i].style.display = "none";
+    }
 }

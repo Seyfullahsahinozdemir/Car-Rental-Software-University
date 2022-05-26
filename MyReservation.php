@@ -89,7 +89,7 @@
                     </form>
                     </div>
                     <!-- Edit Section -->
-                    <div class="form-popup" id="updateForm" style="height: 370px; <?php if (isset($_POST['edit_form'])) {
+                    <div class="form-popup div2" id="updateForm" style="height: 370px; <?php if (isset($_POST['edit_form'])) {
                         $sdate = new DateTime($_POST['car_start']);
                         $fdate = new DateTime($_POST['car_finish']);
                         $difference=$sdate->diff($fdate);
@@ -190,7 +190,7 @@
                           <!-- END EDIT -->
 
                           <!-- Delete Section -->
-                    <div style="height: 175px; overflow-y:hidden" class="form-popup" id="deleteForm">
+                    <div style="height: 250px; overflow-y:hidden" class="form-popup" id="deleteForm">
                       
                       <form style="height: 100%;" id='delete_form' enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="form-container">
                         <h4>Delete Reservation</h4>
@@ -198,8 +198,8 @@
                         <input name="delete_carname" type = "hidden" id="delete_carname" readonly>
                         <input name = 'delete_start' type="hidden" id = 'delete_start' readonly>
                         <input name = 'delete_finish' type="hidden" id = 'delete_finish' readonly>
-                        <input type="submit" name='yes' form="delete_form" value="Yes" style="width: 20%; position:absolute; left:80px; margin-top:20px;"></input>
-                        <input type="button" onclick="closeDeleteForm()" form="delete_form"  value="No" style="width: 20%; position:absolute; right:80px; margin-top:20px;"></input>
+                        <input type="submit" name='yes' form="delete_form" value="Yes" style="width: 20%; position:absolute; left:10%; margin-top:20px;"></input>
+                        <input type="button" onclick="closeDeleteForm()" form="delete_form"  value="No" style="width: 20%; position:absolute; right:10%; margin-top:20px;"></input>
                       
                         <?php 
 
@@ -230,7 +230,7 @@
                       <h3>Rate Your Experience</h3>
 
                       <input id="carID" name = 'carID' type="hidden" value = '<?php if (isset($_POST['rate-car-btn'])) {echo $_POST['rate-carid'];} ?>' readonly>
-
+                      <input id = 'startd' name = 'startd' type = 'hidden' value = '<?php if (isset($_POST['rate-car-btn'])) {echo $_POST['rate-carstart'];} ?>' readonly>
                       <label for="rating">Stars: </label>
                         <div class="rating">
                             
@@ -254,11 +254,12 @@
                             $comment = $_POST['comment'];
                             $username = $_SESSION['username'];
                             $carID = $_POST['carID'];
+                            $startd = $_POST['startd'];
 
-                            $sql = "SELECT * FROM rate WHERE carID = '$carID' AND username = '$username'";
+                            $sql = "SELECT * FROM rate WHERE carID = '$carID' AND start = '$startd'";
                             $result = mysqli_query($conn,$sql);
                             if ($result->num_rows == 0) {
-                                $sql = "INSERT INTO rate (carID,username,stars,comment) VALUES ('$carID','$username','$stars','$comment')";
+                                $sql = "INSERT INTO rate (carID,username,stars,comment,start) VALUES ('$carID','$username','$stars','$comment','$startd')";
                                 mysqli_query($conn,$sql);
                             }
 
@@ -335,12 +336,13 @@
                                             else {
                                                 if ($_SESSION['statu'] == 1) {
                                                     $cu = $_SESSION['username'];
-                                                    $sql4 = "SELECT * FROM rate WHERE carID = '$cID' AND username = '$cu'";
+                                                    $sql4 = "SELECT * FROM rate WHERE carID = '$cID' AND start = '$rs'";
                                                 $result4 = mysqli_query($conn,$sql4);
                                                 if ($result4->num_rows == 0) {
                                                     echo "<td data-label = 'Options'>
                                                     <form method = 'post' id = 'rate-car-form' action = 'MyReservation.php'>
                                                     <input name = 'rate-carid' value = '".$cID."' type = 'hidden' readonly'>
+                                                    <input name = 'rate-carstart' value = '".$rs."' type = 'hidden' readonly'>
                                                     <input type = 'submit' name = 'rate-car-btn' form = 'rate-car-form' value = 'Rate Your Experience'>
                                                     </form>
                                                     </td>";
@@ -352,7 +354,7 @@
 
                                     }
                                     else {
-                                        echo "<h3 style = 'color: white; padding-left: 25px;' id = 'errorTag'>There are no cars at Database</h3>";
+                                        echo "<h3 style = 'color: white; padding-left: 25px;' id = 'errorTag'>You don't have any reservation</h3>";
                                     }
                                 }
                             }
@@ -414,12 +416,13 @@
                                                         else {
                                                             if ($_SESSION['statu'] == 1) {
                                                                 $cu = $_SESSION['username'];
-                                                                $sql4 = "SELECT * FROM rate WHERE carID = '$cID' AND username = '$cu'";
+                                                                $sql4 = "SELECT * FROM rate WHERE carID = '$cID' AND start = '$rs'";
                                                             $result4 = mysqli_query($conn,$sql4);
                                                             if ($result4->num_rows == 0) {
                                                                 echo "<td data-label = 'Options'>
                                                                 <form method = 'post' id = 'rate-car-form' action = 'MyReservation.php'>
                                                                 <input name = 'rate-carid' value = '".$cID."' type = 'hidden' readonly'>
+                                                                <input name = 'rate-carstart' value = '".$rs."' type = 'hidden' readonly'>
                                                                 <input type = 'submit' name = 'rate-car-btn' form = 'rate-car-form' value = 'Rate Your Experience'>
                                                                 </form>
                                                                 </td>";
@@ -431,7 +434,7 @@
     
                                 }
                                 else {
-                                    echo "<h3 style = 'color: white; padding-left: 25px;' id = 'errorTag'>There are no cars at Database</h3>";
+                                    echo "<h3 style = 'color: white; padding-left: 25px;' id = 'errorTag'>You don't have any reservation</h3>";
                                 }
                             }
 

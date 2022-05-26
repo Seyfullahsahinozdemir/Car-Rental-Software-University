@@ -434,6 +434,39 @@
                                 $sql = "UPDATE cars SET image = '".$_FILES['editimg']['name']."', name = '$name', model = '$model', price = '$price', numberSeat = '$numberSeat', day = '$numberDay', state = '$state' WHERE ID = '$id'";
                                 move_uploaded_file($temp_img,$upload_folder.$actual_img);
                                 $conn->query($sql);
+
+                                if ($state == 'faulty') {
+                                    $userlist = "SELECT DISTINCT r.username, r.start, r.finish FROM reservation r WHERE carname = '$name' AND start > NOW()";
+                                    $result_userlist = mysqli_query($conn,$userlist);
+                                    while ($row_userlist = $result_userlist->fetch_assoc()) {
+                                        $username = $row_userlist['username'];
+                                        $start = $row_userlist['start'];
+                                        $finish = $row_userlist['finish'];
+
+                                        $groupID = rand();
+                                        while (true) {
+                                            $sql2 = "SELECT groupID FROM message WHERE groupID = '$groupID'";
+                                            $result = mysqli_query($conn,$sql2);
+                                            if ($result->num_rows == 0) {
+                                                break;
+                                            }
+                                            else {
+                                                $groupID = rand();
+                                            }
+                                        }
+                                        $comment = "Hi $username, Some of the reasons, we need to delete your reservation that start at $start and finish at $finish";
+                                        
+                                        $admin_username = $_SESSION['username'];
+                                        $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$admin_username','$groupID','$comment',NOW(),0,'$username')";
+                                        $result = mysqli_query($conn,$sql);
+                                        $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$groupID','Reservation','$name')";
+                                        $result = mysqli_query($conn,$sql);
+ 
+                                        $sql_delete = "DELETE FROM reservation WHERE start > NOW() AND carname = '$name'";
+                                        mysqli_query($conn,$sql_delete);
+                                    }
+                                }
+
                             }
                         }
                       ?>
@@ -458,6 +491,7 @@
 
                             if (isset($_POST['yes'])) {
                                 $id = $_POST['deleteid'];
+                                echo $id;
                                 $sql = "DELETE FROM cars WHERE ID = '$id'";
                                 $result = mysqli_query($conn,$sql);                                
                             }

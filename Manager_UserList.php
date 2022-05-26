@@ -25,10 +25,37 @@
                     deleteForm(id);
                 }
             }
-            });
+        });
             
 
-      </script>
+    </script>
+    <style>
+        #active {
+            background-color: #BBEEBB;
+            color: white;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 3px 3px;
+            width: 30%;
+        }
+
+        #active:hover {
+            opacity: 0.8;
+        }
+
+        #deactive {
+            background-color: #fb607f;
+            color: white;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 3px 3px;
+            width: 30%;
+        }
+
+        #deactive:hover {
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
 <?php
@@ -154,7 +181,7 @@
                                 $password = MD5($_POST['password']);
  
                                 if (!empty($name) && !empty($username) && !empty($email) && !empty($password) && !checkAll($conn,0)) {
-                                    $sql = "INSERT INTO users (name,username,email,password,statu) VALUES ('$name','$username','$email','$password','1')";
+                                    $sql = "INSERT INTO users (name,username,email,password,statu,active) VALUES ('$name','$username','$email','$password','1',1)";
                                     $conn->query($sql);
                                 }
                             }
@@ -189,7 +216,6 @@
                     </div>
                     
                       <!-- END Delete Section -->
-                      
 
                     <!-- Search Section -->
                     <div style="text-align: center; padding: 15px;">
@@ -209,10 +235,10 @@
                             
                             if (isset($_POST['search_user'])) {
                                 $name = $_POST['user-search'];
-                                $sql = "SELECT name,username,email,password FROM users WHERE name = '$name'";
+                                $sql = "SELECT name,username,email,password,active FROM users WHERE name = '$name'";
                                 $result = mysqli_query($conn,$sql);
                                 if ($name == "") {
-                                    $sql = "SELECT name,username,email,password FROM users";
+                                    $sql = "SELECT name,username,email,password,active FROM users";
                                     $result = mysqli_query($conn,$sql);
                                     if ($result->num_rows > 0) {
                                             echo "<tr>
@@ -222,24 +248,37 @@
                                                 <th scope='col'>Password</th>
                                                 <th scope='col'>Options</th>
                                             </tr>";
-
+                                            $counter = 0;
                                             while ($row = $result->fetch_assoc()) {
                                                 $tempN = $row['name'];
                                                 $tempU = $row['username'];
                                                 $tempE = $row['email'];
                                                 $tempP = MD5($row['password']);
-
-            
                                             
+                                                if ($row['active'] == 1) {$tempAc = 'active';} else {$tempAc = 'deactive';};
+                                            
+                                                $u = "active_username_".$counter;
+                                                $s = "active_statu_".$counter;
+
                                                 echo "<tr>
-                                                    <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
-                                                    <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                                    <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                                    <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                                    <td data-label = 'Options'>
-                                                    <a class = 'delete-btn'>Delete</a>
-                                                    </td>
-                                                </tr>";
+                                                <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
+                                                <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
+                                                <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
+                                                <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                                <td data-label = 'Options'>";
+                                            
+                                            echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
+                                            <input type = 'hidden' name = '$u' value = '".$tempU."'>
+                                            <input type = 'hidden' name = '$s' value = '".$tempAc."'>
+                                            <input style = 'border: none;' type = 'submit' form = '$counter' name = '$counter' id = '".$tempAc."' class = 'active-btn' value = '".$tempAc."'>";
+        
+                                            echo "</form>";
+        
+                                            echo "<br><br>
+                                                <a class = 'delete-btn'>Delete</a>
+                                                </td>
+                                            </tr>";
+                                            $counter++;
                                             }
                                     }
                                 }
@@ -250,35 +289,47 @@
                                         <th scope='col'>Username</th>
                                         <th scope='col'>Email</th>
                                         <th scope='col'>Password</th>
-                                        <th scope='col'>Options</th>
+                                        <th scope='col'>Options</th></tr>";
+                                        $counter = 0;
+                                        while ($row = $result->fetch_assoc()) {
+                                            $tempN = $row['name'];
+                                            $tempU = $row['username'];
+                                            $tempE = $row['email'];
+                                            $tempP = MD5($row['password']);
+                                            
+                                            if ($row['active'] == 1) {$tempAc = 'active';} else {$tempAc = 'deactive';};
+                                        
+                                            $u = "active_username_".$counter;
+                                            $s = "active_statu_".$counter;
 
-                                    </tr>";
-
-                                    while ($row = $result->fetch_assoc()) {
-                                        $tempN = $row['name'];
-                                        $tempU = $row['username'];
-                                        $tempE = $row['email'];
-                                        $tempP = MD5($row['password']);
+                                            echo "<tr>
+                                            <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
+                                            <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
+                                            <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
+                                            <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                            <td data-label = 'Options'>";
+                                        
+                                        echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
+                                        <input type = 'hidden' name = '$u' value = '".$tempU."'>
+                                        <input type = 'hidden' name = '$s' value = '".$tempAc."'>
+                                        <input style = 'border: none;' type = 'submit' form = '$counter' name = '$counter' id = '".$tempAc."' class = 'active-btn' value = '".$tempAc."'>";
     
-                                    
-                                        echo "<tr>
-                                                    <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
-                                                    <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                                    <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                                    <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                                    <td data-label = 'Options'>
-                                                    <a class = 'delete-btn'>Delete</a>
-                                                    </td>
-                                                </tr>";
+                                        echo "</form>";
+    
+                                        echo "<br><br>
+                                            <a class = 'delete-btn'>Delete</a>
+                                            </td>
+                                        </tr>";
+                                        $counter++;
+                                        }
+                                    }
+                                    else {
+                                        echo "<h3 id = 'errorTag'>No Users Found</h3>";
                                     }
                                 }
-                                else {
-                                    echo "<h3 id = 'errorTag'>No Users Found</h3>";
-                                }
-                            }
                             }
                             else {
-                                $sql = "SELECT name,username,email,password FROM users";
+                                $sql = "SELECT name,username,email,password,active FROM users";
                                 $result = mysqli_query($conn,$sql);
                                 if ($result->num_rows > 0) {
                                     echo "<tr>
@@ -289,36 +340,64 @@
                                         <th scope='col'>Options</th>
 
                                     </tr>";
-    
+                                    $counter = 0;
                                     while ($row = $result->fetch_assoc()) {
                                         $tempN = $row['name'];
                                         $tempU = $row['username'];
                                         $tempE = $row['email'];
                                         $tempP = MD5($row['password']);
-    
+                                       
+                                        if ($row['active'] == 1) {$tempAc = 'active';} else {$tempAc = 'deactive';};
                                     
+                                        $u = "active_username_".$counter;
+                                        $s = "active_statu_".$counter;
+
                                         echo "<tr>
-                                                    <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
-                                                    <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                                    <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                                    <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                                    <td data-label = 'Options'>
-                                                    <a class = 'delete-btn'>Delete</a>
-                                                    </td>
-                                                </tr>";
+                                        <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
+                                        <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
+                                        <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
+                                        <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                        <td data-label = 'Options'>";
+                                    
+                                    echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
+                                    <input type = 'hidden' name = '$u' value = '".$tempU."'>
+                                    <input type = 'hidden' name = '$s' value = '".$tempAc."'>
+                                    <input style = 'border: none;' type = 'submit' form = '$counter' name = '$counter' id = '".$tempAc."' class = 'active-btn' value = '".$tempAc."'>";
+
+                                    echo "</form>";
+
+                                    echo "<br><br>
+                                        <a class = 'delete-btn'>Delete</a>
+                                        </td>
+                                    </tr>";
+                                    $counter = $counter + 1;
                                     }
-    
+
+                            for ($i = 0; $i < $counter; $i++) {
+                                if (isset($_POST[strval($i)])) {
+                                    $u = "active_username_".$i;
+                                    $s = "active_statu_".$i;
+                                    $user = $_POST[$u];
+                                if ($_POST[$s] == "active") {
+                                    $sql_active = "UPDATE users SET active = 0 WHERE username = '$user'";
+                                    $sql_deactive = "DELETE FROM reservation WHERE username = '$user' AND start > NOW()";
+                                    mysqli_query($conn,$sql_deactive);
+                                }
+                                else {
+                                    $sql_active = "UPDATE users SET active = 1 WHERE username = '$user'";
+                                }
+                                mysqli_query($conn,$sql_active);
+                                
+                                }
+                            }
+                                    
                                 }
                                 else {
                                     echo "There are no cars at Database";
                                 }
                             }
-
                             
-                            
-                            
-
-                            
+            
                             $conn->close();
                         ?>
                         </table>

@@ -126,12 +126,7 @@ select {
       color: #8486A0;
   }
   
-  @media (max-width: 768px) {
-      #cars {
-          display: block;
-          width: 90%;
-      }
-  }
+
 
   /* Popup css */
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -148,6 +143,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
   z-index: 9;
   overflow-y: scroll;
   border-bottom: 1px solid #ddd;
+}
+
+.div1 {
+  left:35%;right: 45%;
+}
+
+.div1 {
+  left:35%;right: 35%;
 }
 
 /* Add styles to the form container */
@@ -236,3 +239,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
   left: 10%;
 }
 
+@media (max-width: 768px) {
+  #cars {
+      display: block;
+      width: 90%;
+  }
+
+  .div1 {
+    left: 20%;
+    right: 20%;
+  }
+
+  .div2 {
+    left:20%;
+    right:20%;
+  }
+}

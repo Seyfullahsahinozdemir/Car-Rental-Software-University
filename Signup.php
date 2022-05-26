@@ -22,6 +22,11 @@
         #exit-btn:hover {
             opacity: 0.6;
         }
+        #successTag {
+    border: 1px solid white;
+    border-radius: 6px;
+    background-color: rgb(41, 223, 110);
+}
     </style>
 </head>
 <body>
@@ -38,6 +43,7 @@
 
     
     $username = $name = $email = $password = $repassword = "";
+    $flag= 0;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['uname'];
@@ -94,9 +100,7 @@
                         }
                     ?>"> 
                     <br><br>
-                    <label for="email">Email: </label><span><?php if ($_SERVER['REQUEST_METHOD'] == 'POST'){if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                        echo "Invalid email format";
-                    }} ?></span>
+                    <label for="email">Email: </label>
                     <input type="text" id="email" name="email" value="<?php
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             if ($_POST['email'] != "") {
@@ -115,7 +119,9 @@
                         else {
                             echo "Enter Email";
                         }
-                    ?>"> 
+                    ?>"><span><?php if ($_SERVER['REQUEST_METHOD'] == 'POST'){if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && !empty($_POST['email'])) {
+                        echo "<h3 id = 'errorTag'>Invalid email format</h3>";$flag = 1;
+                    }} ?></span> 
                     <br><br>
                     <label for="pass">Password: </label>
                     <input type="text" id="pass" name="pass" value="<?php
@@ -167,7 +173,7 @@
                                 $email = $_POST['email'];
                                 $password = $_POST['pass'];
                                 $repassword = $_POST['repassword'];
-                                if ($username != "" && $name != "" && $email != "" && $password != "" && $repassword != "") {
+                                if ($username != "" && $name != "" && $email != "" && $password != "" && $repassword != "" && $flag != 1) {
                                     $password = MD5($_POST['pass']);
                                     $repassword = MD5($_POST['repassword']);
                                     $sql = "SELECT username FROM users WHERE username = '$username'";
@@ -180,15 +186,20 @@
                                         else {
                                             $result = mysqli_query($conn, $sql2);
                                             if ($result->num_rows > 0) {
-                                                echo "<h3 id='errorTag'>User already exist !!!</h3>";
+                                                echo "<h3 id='errorTag'>Email already using !!!</h3>";
                                             }
                                             else if ($password != $repassword) {
                                                 echo "<h3 id='errorTag'>Unmatched password !!!</h3>";
                                             }
                                             else {
-                                                $sql = "INSERT INTO users VALUES('$name','$username','$email','$password','1')";
-                                                $conn->query($sql);
-                                                header("Location:../Car Rental Software/Login.php");
+                                                $sql = "INSERT INTO users VALUES('$name','$username','$email','$password','1',1)";
+                                                echo "<h3 id='successTag'>User Add Succesfully</h3>";
+                                                if ($conn->query($sql)) {
+                                                    //sleep(2);
+                                                    //header("Location:../Car Rental Software/Login.php");
+                                                    header("refresh: 2; url='http://localhost/web/Car Rental Software/Login.php'");
+                                                }
+                                                
                                             }
                                         }
                                     }

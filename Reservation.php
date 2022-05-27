@@ -215,7 +215,7 @@
 
                                         $carID = $row['ID'];
                                         $divID = $row['ID']."_car";
-                                        echo "<div id='".$divID."' class='form-popup div1' style = 'overflow-y:hidden; margin-top:40px;background-color: white; height: 500px;  display: none;'>
+                                        echo "<div id='".$divID."' class='form-popup div1' style = ' margin-top:40px;background-color: white; height: 500px;  display: none;'>
                                         <h3>Comments</h3>";
                                         
                                         $getComment = "SELECT * FROM rate WHERE carID = '$carID'";

@@ -586,7 +586,7 @@
                                         $tempP = $row['price'];
                                         $tempSt = $row['state'];
                                         $tempSe = $row['numberSeat'];
-                                        $tempSe = $row['day'];
+                                        $tempD = $row['day'];
     
                                     
                                         echo "<tr>
@@ -597,7 +597,7 @@
                                             <td class = 'car-price' data-label = 'Price'>".$tempP."</td>
                                             <td class = 'car-state' data-label = 'State'>".$tempSt."</td>
                                             <td class = 'car-seat' data-label = 'Seat'>".$tempSe."</td>
-                                            <td class = 'car-day' data-label = 'Seat'>".$tempD."</td>
+                                            <td class = 'car-day' data-label = 'Day'>".$tempD."</td>
                                             <td data-label = 'Options'>
                                              <a class = 'update-btn'>Update</a><br><br><br>
                                              <a class = 'delete-btn'>Delete</a>

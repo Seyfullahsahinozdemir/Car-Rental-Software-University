@@ -10,7 +10,7 @@ function openPopup (name,model,price,seat,image) {
     document.getElementById('popup-car-seat').value = seat;
     document.getElementById('span-seat').value = seat;
     document.getElementById('popup-car-image').value = image;
-    document.getElementById('span-img').src = "img/"+image;
+    document.getElementById('span-img').src = "uploads/"+image;
 }
 
 function closeForm() {

@@ -192,13 +192,13 @@
                                                 echo "<h3 id='errorTag'>Unmatched password !!!</h3>";
                                             }
                                             else {
-                                                $sql = "INSERT INTO users VALUES('$name','$username','$email','$password','1',1)";
+                                                //$sql = "INSERT INTO users VALUES('$name','$username','$email','$password','1',1)";
+                                                $one = 1;
+                                                $stmt = $conn->prepare("INSERT INTO users (name, username, email,password,statu,active) VALUES (?, ?, ?,?,?,?)");
+                                                $stmt->bind_param( "ssssss",$name, $username, $email,$password,$one,$one);
+                                                $stmt->execute();
                                                 echo "<h3 id='successTag'>User Add Succesfully</h3>";
-                                                if ($conn->query($sql)) {
-                                                    //sleep(2);
-                                                    //header("Location:../Car Rental Software/Login.php");
-                                                    header("refresh: 2; url='http://localhost/web/Car Rental Software/Login.php'");
-                                                }
+                                                header("refresh: 2; url='http://localhost/web/Car Rental Software/Login.php'");
                                                 
                                             }
                                         }

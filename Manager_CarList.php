@@ -48,7 +48,9 @@
             }
             });
             
-
+            function tempClose() {
+            document.getElementById("temp-reservation").style.display = "none";
+        }
       </script>
    </head>
 </head>
@@ -82,6 +84,49 @@
         </div>
         <div class="content">
             <div id="login">
+
+            <div id = 'temp-reservation' class="form-popup" style="background-color:#ddd;<?php if (isset($_POST['list-car-reservation-btn'])) {
+                    echo "display: block;";
+                }else {
+                    echo "display:none;";
+                } ?>">
+                <h3>Reservation List</h3>
+                    <?php
+                        if (isset($_POST['list-car-reservation-btn'])) {
+                            $carnn = $_POST['car-reservation-name'];
+                            $sql = "SELECT * FROM reservation WHERE carname = '$carnn'";
+                            $result= mysqli_query($conn,$sql);
+                            if ($result->num_rows > 0) {
+                                echo "<table><tr>
+                                <th>UserName</th>
+                                <th>Start</th>
+                                <th>Finish</th>
+                                <th>Price</th></tr>
+                                ";
+                                while ($row=$result->fetch_assoc()) {
+                                    /*$un = $row['username'];
+                                    $s = $row['start'];
+                                    $f = $row['finish'];
+                                    $tp = $row['totalPrice'];*/
+
+                                    echo "<tr><td>".$row['username']."</td>
+                                    <td>".$row['start']."</td>
+                                    <td>".$row['finish']."</td>
+                                    <td>".$row['totalPrice']."</td></tr>
+                                    ";
+                                }
+                                echo "</table>";
+                            }
+                            else {
+
+                                echo "<h3 id = 'errorTag'>No reservation found</h3>";
+
+                            }
+                        }
+                    ?>
+                    <a id = 'close-reservation-list' class='close' onclick="tempClose()"></a>
+                </div>
+
                 <div id="car-list-div">
                     <a onclick="openForm()" id="manager-add-btn">Add New Car</a>
                     <div class="form-popup" id="myForm" style="<?php if (isset($_POST['add_form'])) { checkAll($conn,1); } ?>">
@@ -225,11 +270,13 @@
                                 $numberSeat = (int) $_POST['numberSeat'];
                                 $numberDay = (int) $_POST['numberDay'];
                                 $temp_img = $_FILES['img']['tmp_name'];
-                                $actual_img = $_FILES['img']['name'];
+                                $actual_img = $name."_".$_FILES['img']['name'];
                                 $upload_folder = "uploads/";
- 
                                 if (!empty($name) && !empty($model) && !empty($price) && !empty($numberSeat) && !empty($numberDay) && !empty($_FILES['img']['name']) && !checkAll($conn,0)) {
-                                    $sql = "INSERT INTO cars (name,model,price,image,numberSeat,state,day) VALUES ('$name','$model','$price','".$_FILES['img']['name']."','$numberSeat','empty','$numberDay')";
+                                    //$sql = "INSERT INTO cars (name,model,price,image,numberSeat,state,day) VALUES ('$name','$model','$price','".$_FILES['img']['name']."','$numberSeat','empty','$numberDay')";
+                                    
+                                    $sql = "INSERT INTO cars (name,model,price,image,numberSeat,state,day) VALUES ('$name','$model','$price','".$actual_img."','$numberSeat','empty','$numberDay')";
+                                    
                                     move_uploaded_file($temp_img,$upload_folder.$actual_img);
                                     $conn->query($sql);
                                 }
@@ -422,16 +469,16 @@
                             $numberSeat = (int) $_POST['editnumberSeat'];
                             $numberDay = (int) $_POST['editnumberDay'];
                             $state = $_POST['editstate'];
-
-                            
                             $temp_img = $_FILES['editimg']['tmp_name'];
-                            $actual_img = $_FILES['editimg']['name'];
+                            $actual_img = $name."_".$_FILES['editimg']['name'];
                             $upload_folder = "uploads/";
-
+                            
+                            
                             
 
                             if (!empty($name) && !empty($id) && !empty($state) && !empty($model) && !empty($price) && !empty($numberSeat) && !empty($_FILES['editimg']['name']) && !editcheckAll($conn,0)) {                               
-                                $sql = "UPDATE cars SET image = '".$_FILES['editimg']['name']."', name = '$name', model = '$model', price = '$price', numberSeat = '$numberSeat', day = '$numberDay', state = '$state' WHERE ID = '$id'";
+                                
+                                $sql = "UPDATE cars SET image = '".$actual_img."', name = '$name', model = '$model', price = '$price', numberSeat = '$numberSeat', day = '$numberDay', state = '$state' WHERE ID = '$id'";
                                 move_uploaded_file($temp_img,$upload_folder.$actual_img);
                                 $conn->query($sql);
 
@@ -537,6 +584,7 @@
                                                 <th scope='col'>Options</th>
                                             </tr>";
 
+                                            $counter = 0;
                                             while ($row = $result->fetch_assoc()) {
                                                 $tempID = $row['ID'];
                                                 $tempN = $row['name'];
@@ -558,9 +606,14 @@
                                                     <td class = 'car-day' data-label = 'Day'>".$tempD."</td>
                                                     <td data-label = 'Options'>
                                                     <a class = 'update-btn'>Update</a><br><br><br>
-                                                    <a class = 'delete-btn'>Delete</a>
+                                                    <a class = 'delete-btn'>Delete</a><br><br>
+                                                    <form id = '$counter' name = 'list-car-reservation' action = 'Manager_CarList.php' method = 'post'>
+                                                        <input type = 'hidden' value = '$tempN' name = 'car-reservation-name'>
+                                                        <input type = 'submit' value = 'Reservation' name = 'list-car-reservation-btn'>
+                                                    </form>
                                                     </td>
                                                 </tr>";
+                                                $counter++;
                                             }
                                     }
                                 }
@@ -588,7 +641,7 @@
                                         $tempSe = $row['numberSeat'];
                                         $tempD = $row['day'];
     
-                                    
+                                    $counter = 0;
                                         echo "<tr>
                                             <td class = 'car-id' data-label = 'ID'>".$tempID."</td>
                                             <td class = 'car-name' data-label = 'Name'>".$tempN."</td>
@@ -600,9 +653,14 @@
                                             <td class = 'car-day' data-label = 'Day'>".$tempD."</td>
                                             <td data-label = 'Options'>
                                              <a class = 'update-btn'>Update</a><br><br><br>
-                                             <a class = 'delete-btn'>Delete</a>
+                                             <a class = 'delete-btn'>Delete</a><br><br>
+                                             <form id = '$counter' name = 'list-car-reservation' action = 'Manager_CarList.php' method = 'post'>
+                                                        <input type = 'hidden' value = '$tempN' name = 'car-reservation-name'>
+                                                        <input type = 'submit' value = 'Reservation' name = 'list-car-reservation-btn'>
+                                                    </form>
                                             </td>
                                         </tr>";
+                                        $counter++;
                                     }
                                 }
                                 else {
@@ -636,7 +694,7 @@
                                         $tempSe = $row['numberSeat'];
                                         $tempD = $row['day'];
     
-                                    
+                                    $counter = 0;
                                         echo "<tr>
                                             <td class = 'car-id' data-label = 'ID'>".$tempID."</td>
                                             <td class = 'car-name' data-label = 'Name'>".$tempN."</td>
@@ -648,9 +706,14 @@
                                             <td class = 'car-day' data-label = 'Day'>".$tempD."</td>
                                             <td data-label = 'Options'>
                                              <a class = 'update-btn'>Update</a><br><br><br>
-                                             <a class = 'delete-btn'>Delete</a>
+                                             <a class = 'delete-btn'>Delete</a><br><br>
+                                             <form id = '$counter' name = 'list-car-reservation' action = 'Manager_CarList.php' method = 'post'>
+                                                        <input type = 'hidden' value = '$tempN' name = 'car-reservation-name'>
+                                                        <input type = 'submit' value = 'Reservation' name = 'list-car-reservation-btn'>
+                                                    </form>
                                             </td>
                                         </tr>";
+                                        $counter++;
                                     }
     
                                 }

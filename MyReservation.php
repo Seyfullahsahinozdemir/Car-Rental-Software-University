@@ -320,7 +320,7 @@
                                                 echo "<td class = 'car-username' data-label = 'Username'>".$cu."</td>";
                                             }
                                             echo "<td class = 'car-name' data-label = 'Car Name'>".$cn."</td>
-                                                        <td class = 'car-img' data-label = 'Car Image'><img src = 'img/".$ci."'></td>
+                                                        <td class = 'car-img' data-label = 'Car Image'><img src = 'uploads/".$ci."'></td>
                                                         <td class = 'car-model' data-label = 'Car Model'>".$cm."</td>
                                                         <td class = 'reservation-start' data-label = 'Start Date'>".$rs."</td>
                                                         <td class = 'reservation-finish' data-label = 'Finish Date'>".$rf."</td>
@@ -329,7 +329,7 @@
                                             $today = date("Y-m-d");
                                             if ($rs >= $today) {
                                                 echo "<td data-label = 'Options'>
-                                                <a class = 'update-btn'>Update</a>
+                                                <a class = 'update-btn'>Update</a><br><br>
                                                 <a class = 'delete-btn'>Delete</a>
                                                     </td>";
                                             } 
@@ -400,7 +400,7 @@
                                                 echo "<td class = 'car-username' data-label = 'Username'>".$cu."</td>";
                                             }
                                             echo "<td class = 'car-name' data-label = 'Car Name'>".$cn."</td>
-                                                        <td class = 'car-img' data-label = 'Car Image'><img src = 'img/".$ci."'></td>
+                                                        <td class = 'car-img' data-label = 'Car Image'><img src = 'uploads/".$ci."'></td>
                                                         <td class = 'car-model' data-label = 'Car Model'>".$cm."</td>
                                                         <td class = 'reservation-start' data-label = 'Start Date'>".$rs."</td>
                                                         <td class = 'reservation-finish' data-label = 'Finish Date'>".$rf."</td>
@@ -409,7 +409,7 @@
                                                         $today = date("Y-m-d");
                                                         if ($rs >= $today) {
                                                             echo "<td data-label = 'Options'>
-                                                            <a class = 'update-btn'>Update</a>
+                                                            <a class = 'update-btn'>Update</a><br><br>
                                                             <a class = 'delete-btn'>Delete</a>
                                                                 </td>";
                                                         } 

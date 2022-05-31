@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/Table.css">
     <link rel="stylesheet" href="css/Reservation.css">
     <script src="js/Customer.js"></script>
+    <script src="js/Navbar.js"></script>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         /*
@@ -180,10 +181,22 @@
                                 }
 
                                 if (!empty($title) && !empty($subtopic) && !empty($comment) && !empty($username)) {
-                                    $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$groupID','$comment',NOW(),0,'admin')";
-                                    $result = mysqli_query($conn,$sql);
-                                    $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$groupID','$title','$subtopic')";
-                                    $result = mysqli_query($conn,$sql);
+                                    //$sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$groupID','$comment',NOW(),0,'admin')";
+                                    $stmt = $conn->prepare("INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES (?, ?, ?,NOW(),0,?)");
+                                    $admin = 'admin';
+                                    $zero = 0;
+                                    $stmt->bind_param( "ssss",$username, $groupID, $comment,$admin);
+                                    $stmt->execute();
+                                    
+                                    //$result = mysqli_query($conn,$sql);
+                                    //$sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$groupID','$title','$subtopic')";
+
+
+                                    $stmt = $conn->prepare("INSERT INTO message_group (groupID,title,subtopic) VALUES (?, ?, ?)");
+                                    
+                                    $stmt->bind_param( "sss",$groupID, $title, $subtopic);
+                                    $stmt->execute();
+                                    //$result = mysqli_query($conn,$sql);
                                 }
                             }
                         ?>
@@ -259,10 +272,20 @@
                         if (isset($_POST['reply-btn'])) {
                             if ($_SESSION['statu'] == 1) {
                                 $comment = $_POST['user_mes'];
-                                $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'admin')";
-                                $result = mysqli_query($conn,$sql);
-                                $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
-                                $result = mysqli_query($conn,$sql);
+                                //$sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'admin')";
+                                $stmt = $conn->prepare("INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES (?, ?, ?,NOW(),0,'admin')");
+                                $stmt->bind_param("sss",$username,$group,$comment);
+                                $stmt->execute();
+                                //$result = mysqli_query($conn,$sql);
+                                //$sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
+                                $stmt = $conn->prepare("INSERT INTO message_group (groupID,title,subtopic) VALUES (?, ?, ?)");
+                                $stmt->bind_param("sss",$group,$title,$subtopic);
+                                $stmt->execute();
+
+                                //$result = mysqli_query($conn,$sql);
+                                
+
+                            
                             }
                             else {
                                 $sql = "SELECT customerUsername FROM message WHERE groupID = '$group' AND customerUsername != 'admin'";
@@ -272,14 +295,25 @@
                                     $receiver = $row['customerUsername'];
                                 }
                                 $comment = $_POST['user_mes'];
-                                $sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'$receiver')";
-                                $result = mysqli_query($conn,$sql);
-                                $sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
-                                $result = mysqli_query($conn,$sql);
+                                //$sql = "INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES ('$username','$group','$comment',NOW(),0,'$receiver')";
+                                //$result = mysqli_query($conn,$sql);
+                                $stmt = $conn->prepare("INSERT INTO message (customerUsername,groupID,comment,date,statu,receiver) VALUES (?, ?, ?,NOW(),0,'admin')");
+                                $stmt->bind_param("sss",$username,$group,$comment);
+                                $stmt->execute();
+                                //$result = mysqli_query($conn,$sql);
+                                //$sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
+                                $stmt = $conn->prepare("INSERT INTO message_group (groupID,title,subtopic) VALUES (?, ?, ?)");
+                                $stmt->bind_param("sss",$group,$title,$subtopic);
+                                $stmt->execute();
+                                $stmt->close();
+                                //$sql = "INSERT INTO message_group (groupID,title,subtopic) VALUES ('$group','$title','$subtopic')";
+                                //$result = mysqli_query($conn,$sql);
                             }
                             
 
                         }
+                        
+                        $conn->close();
                       ?>
                     
                     

@@ -27,7 +27,9 @@
             }
         });
             
-
+        function tempClose() {
+            document.getElementById("temp-reservation").style.display = "none";
+        }
     </script>
     <style>
         #active {
@@ -53,6 +55,19 @@
         }
 
         #deactive:hover {
+            opacity: 0.8;
+        }
+
+        .list-btn {
+            background-color: #ff4444;
+            color: white;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 3px 3px;
+            width: 30%;
+        }
+
+        .list-btn:hover {
             opacity: 0.8;
         }
     </style>
@@ -86,6 +101,42 @@
         </div>
         <div class="content">
             <div id="login">
+                <div id = 'temp-reservation' class="form-popup" style="background-color:#ddd;<?php if (isset($_POST['list-btn'])) {
+                    echo "display: block;";
+                }else {
+                    echo "display:none;";
+                } ?>">
+                <h3>Reservation List</h3>
+                    <?php
+                        if (isset($_POST['list-btn'])) {
+                            $usern = $_POST['list-reservation-username'];
+                            $sql = "SELECT * FROM reservation WHERE username = '$usern'";
+                            $result= mysqli_query($conn,$sql);
+                            if ($result->num_rows > 0) {
+                                echo "<table><tr>
+                                <th>CarName</th>
+                                <th>Start</th>
+                                <th>Finish</th>
+                                <th>Price</th></tr>
+                                ";
+                                while ($row=$result->fetch_assoc()) {
+                                    echo "<tr><td>".$row['carname']."</td>
+                                    <td>".$row['start']."</td>
+                                    <td>".$row['finish']."</td>
+                                    <td>".$row['totalPrice']."</td></tr>
+                                    ";
+                                }
+                                echo "</table>";
+                            }
+                            else {
+
+                                echo "<h3 id = 'errorTag'>No reservation found</h3>";
+                            }
+                        }
+                    ?>
+                    <a id = 'close-reservation-list' class='close' onclick="tempClose()"></a>
+                </div>
+                
                 <div id="car-list-div">
                     <a onclick="openForm()" id="manager-add-btn">Add New User</a>                    
                     <div class="form-popup" id="myForm" style="<?php if (isset($_POST['add_form'])) { checkAll($conn,1); } ?>">
@@ -244,11 +295,12 @@
                                             echo "<tr>
                                                 <th scope='col'>Name</th>
                                                 <th scope='col'>Username</th>
-                                                <th scope='col'>Email</th>
-                                                <th scope='col'>Password</th>
-                                                <th scope='col'>Options</th>
+                                                <th scope='col'>Email</th>";
+                                                //<th scope='col'>Password</th>
+                                            echo "<th scope='col'>Options</th>
                                             </tr>";
                                             $counter = 0;
+                                            $counter1 = 100;
                                             while ($row = $result->fetch_assoc()) {
                                                 $tempN = $row['name'];
                                                 $tempU = $row['username'];
@@ -263,9 +315,9 @@
                                                 echo "<tr>
                                                 <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
                                                 <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                                <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                                <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                                <td data-label = 'Options'>";
+                                                <td class = 'user-email' data-label = 'Email'>".$tempE."</td>";
+                                                //<td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                                echo "<td data-label = 'Options'>";
                                             
                                             echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
                                             <input type = 'hidden' name = '$u' value = '".$tempU."'>
@@ -275,9 +327,13 @@
                                             echo "</form>";
         
                                             echo "<br><br>
+                                            <form id = '$counter1' method = 'post' action = 'Manager_UserList.php'>
+                                                <input type = 'hidden' name = 'list-reservation-username' value = '$tempU'>
+                                                <input type = 'submit' form = '$counter1' name = 'list-btn'  class = 'list-btn' value = 'Reservation'></form><br><br>
                                                 <a class = 'delete-btn'>Delete</a>
                                                 </td>
                                             </tr>";
+                                            $counter1++;
                                             $counter++;
                                             }
                                     }
@@ -287,10 +343,11 @@
                                         echo "<tr>
                                         <th scope='col'>Name</th>
                                         <th scope='col'>Username</th>
-                                        <th scope='col'>Email</th>
-                                        <th scope='col'>Password</th>
-                                        <th scope='col'>Options</th></tr>";
+                                        <th scope='col'>Email</th>";
+                                        //<th scope='col'>Password</th>
+                                        echo "<th scope='col'>Options</th></tr>";
                                         $counter = 0;
+                                        $counter1 = 100;
                                         while ($row = $result->fetch_assoc()) {
                                             $tempN = $row['name'];
                                             $tempU = $row['username'];
@@ -305,9 +362,9 @@
                                             echo "<tr>
                                             <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
                                             <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                            <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                            <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                            <td data-label = 'Options'>";
+                                            <td class = 'user-email' data-label = 'Email'>".$tempE."</td>";
+                                            //<td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                            echo "<td data-label = 'Options'>";
                                         
                                         echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
                                         <input type = 'hidden' name = '$u' value = '".$tempU."'>
@@ -317,9 +374,13 @@
                                         echo "</form>";
     
                                         echo "<br><br>
-                                            <a class = 'delete-btn'>Delete</a>
-                                            </td>
-                                        </tr>";
+                                            <form id = '$counter1' method = 'post' action = 'Manager_UserList.php'>
+                                                <input type = 'hidden' name = 'list-reservation-username' value = '$tempU'>
+                                                <input type = 'submit' form = '$counter1'  name = 'list-btn'  class = 'list-btn' value = 'Reservation'></form><br><br>
+                                                <a class = 'delete-btn'>Delete</a>
+                                                </td>
+                                            </tr>";
+                                            $counter1++;
                                         $counter++;
                                         }
                                     }
@@ -335,12 +396,13 @@
                                     echo "<tr>
                                         <th scope='col'>Name</th>
                                         <th scope='col'>Username</th>
-                                        <th scope='col'>Email</th>
-                                        <th scope='col'>Password</th>
-                                        <th scope='col'>Options</th>
+                                        <th scope='col'>Email</th>";
+                                        //<th scope='col'>Password</th>
+                                       echo "<th scope='col'>Options</th>
 
                                     </tr>";
                                     $counter = 0;
+                                    $counter1 = 100;
                                     while ($row = $result->fetch_assoc()) {
                                         $tempN = $row['name'];
                                         $tempU = $row['username'];
@@ -355,9 +417,9 @@
                                         echo "<tr>
                                         <td class = 'user-name' data-label = 'Name'>".$tempN."</td>
                                         <td class = 'user-username' data-label = 'Username'>".$tempU."</td>
-                                        <td class = 'user-email' data-label = 'Email'>".$tempE."</td>
-                                        <td class = 'user-password' data-label = 'Password'>".$tempP."</td>
-                                        <td data-label = 'Options'>";
+                                        <td class = 'user-email' data-label = 'Email'>".$tempE."</td>";
+                                        //<td class = 'user-password' data-label = 'Password'>".$tempP."</td>
+                                        echo "<td data-label = 'Options'>";
                                     
                                     echo "<form id = '$counter' method = 'post' action = 'Manager_UserList.php'>
                                     <input type = 'hidden' name = '$u' value = '".$tempU."'>
@@ -367,9 +429,13 @@
                                     echo "</form>";
 
                                     echo "<br><br>
-                                        <a class = 'delete-btn'>Delete</a>
-                                        </td>
-                                    </tr>";
+                                            <form id = '$counter1' method = 'post' action = 'Manager_UserList.php'>
+                                                <input type = 'hidden' name = 'list-reservation-username' value = '$tempU'>
+                                                <input type = 'submit' form = '$counter1'  name = 'list-btn'  class = 'list-btn' value = 'Reservation'></form><br><br>
+                                                <a class = 'delete-btn'>Delete</a>
+                                                </td>
+                                            </tr>";
+                                            $counter1++;
                                     $counter = $counter + 1;
                                     }
 

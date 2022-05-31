@@ -383,6 +383,17 @@
                                 ?>">
                                 <br><br>
                             </div>
+
+                            <!-- location -->
+                            <div class="item-group">
+                                <label class="check-label" for="select">Choose Start Location</label><br>
+                                <select name="location" id="location">
+                                    <option value="antalya">antalya</option>
+                                    <option value="izmir">izmir</option>
+                                    <option value="konya">konya</option>
+                                </select>
+                            </div>
+
                             <br>
                             <input name = 'res-search' form="search-reservation" type="submit" id="search-btn" value="Search">                     
                         </form>                       
@@ -418,6 +429,8 @@
                                             $_SESSION['fdate'] = $_POST['fdate'];
                                             $date1=date("Y-m-d",strtotime($_SESSION['sdate']));
                                             $date2=date("Y-m-d",strtotime($_SESSION['fdate']));
+                                            //--
+                                            $location = $_POST['location'];
                                             if ((!empty($_POST['type']) && $flag != 1 && !empty($_POST['price']) && !empty($_POST['sdate']) && !empty($_POST['fdate']) && checkReservationDate($_POST['sdate'],0) != 1 && checkReservationDate($_POST['fdate'],0) != 1 && $_POST['sdate'] != 0 && $_POST['fdate'] != 0 && $_POST['fdate'] > $_POST['sdate'])) {
                                                 $types = $_POST['type'];
                                                 $prices = $_POST['price'];
@@ -443,30 +456,30 @@
 
                                                 
                                                 if (in_array("price1",$prices) && in_array("price2",$prices) && in_array("price3",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
                                                 }
                                                 else if (in_array("price1",$prices) && in_array("price2",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";       
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";       
 
                                                 }
                                                 else if (in_array("price1",$prices) && in_array("price3",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 150 AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 150 AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
 
                                                 }
                                                 else if (in_array("price2",$prices) && in_array("price3",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
 
                                                 }
                                                 else if (in_array("price1",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 150 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price < 150 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
 
                                                 }
                                                 else if (in_array("price2",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price BETWEEN 150 AND 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price BETWEEN 150 AND 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
 
                                                 }
                                                 else if (in_array("price3",$prices)) {
-                                                    $sql = "SELECT * FROM cars WHERE numberSeat IN (" . implode(',', $tempTypes) . ") AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
+                                                    $sql = "SELECT * FROM cars WHERE location = '$location' AND numberSeat IN (" . implode(',', $tempTypes) . ") AND price > 300 AND state = 'empty' && day > ".$difference->d." AND name NOT IN (SELECT carname FROM reservation WHERE (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish)))";
 
                                                 }
 
@@ -517,7 +530,7 @@
                                                                         echo "0";
                                                                     }                                                                    echo "
                                                                     <h3 class='car-names' style='margin-top: 5px;'>".$row['name']."</h3>
-                                                                    <img src='img/".$row['image']."'>
+                                                                    <img src='uploads/".$row['image']."'>
                                                                     <p>Lorem ipsum dolor sit amet consectetur.</p>
                                                                     <p>Price: ".$row['price']."$/day</p>
                                                                     <input type = 'button' value = 'Rent' id='rent-btn' class='car-style car-rent-btn' onclick = 'openForm()'></input>
@@ -535,6 +548,8 @@
                                             }
                                         }
                                         if (isset($_POST['confirm_form'])) {
+
+
                                             $car_name = $_POST['span-name'];
                                             $username = $_SESSION['username'];
                                             $sdate = new DateTime($_SESSION['sdate']);
@@ -543,15 +558,25 @@
                                             $date2=date("Y-m-d",strtotime($_SESSION['fdate']));
                                             $difference = $sdate->diff($fdate);
                                             
-                                            $sql = "SELECT price FROM cars WHERE name = '$car_name'";
-                                            $result = mysqli_query($conn,$sql);
-                                            $row = $result->fetch_assoc();
-                                            $price = $row['price'];
+                                            $sql = "SELECT * FROM reservation WHERE carname = '$car_name' AND (start > '$date1' AND ('$date2' BETWEEN start AND finish)) OR (('$date1' BETWEEN start AND finish) AND finish < '$date2') OR ('$date1' < start AND '$date2' > finish) OR (('$date1' BETWEEN start AND finish) AND ('$date2' BETWEEN start AND finish))";
 
-                                            $total_price = $price * ($difference->d + 1);
-                                            
-                                            $sql = "INSERT INTO reservation (carname,username,start,finish,totalPrice) VALUES ('$car_name','$username','$date1','$date2','$total_price')"; 
                                             $result = mysqli_query($conn,$sql);
+                                            if ($result->num_rows>0) {
+                                                echo "<script>alert('Car is busy')</script>";
+                                            }
+                                            else {
+                                                $sql = "SELECT price FROM cars WHERE name = '$car_name'";
+                                                $result = mysqli_query($conn,$sql);
+                                                $row = $result->fetch_assoc();
+                                                $price = $row['price'];
+    
+                                                $total_price = $price * ($difference->d + 1);
+                                                
+                                                $sql = "INSERT INTO reservation (carname,username,start,finish,totalPrice) VALUES ('$car_name','$username','$date1','$date2','$total_price')"; 
+                                                $result = mysqli_query($conn,$sql);
+                                            }
+
+                                            
 
                                         }
                                         $conn->close();
